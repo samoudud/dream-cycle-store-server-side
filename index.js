@@ -36,6 +36,13 @@ async function run() {
             res.json(products);
         });
 
+        // Get single product api
+        app.get('/products/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) }
+            const result = await productsCollection.findOne(query);
+            res.json(result);
+        });
         // Post Products api
         app.post('/products', async (req, res) => {
             const product = req.body;
