@@ -20,6 +20,7 @@ async function run() {
         const productsCollection = database.collection('products');
         const ordersCollection = database.collection('orders');
         const usersCollection = database.collection('users');
+        const reviewsCollection = database.collection('reviews');
 
         // Get products API
         app.get('/products', async (req, res) => {
@@ -33,14 +34,29 @@ async function run() {
                 products = await result.toArray();
             }
             res.json(products);
+        });
+
+        // Post Products api
+        app.post('/products', async (req, res) => {
+            const product = req.body;
+            const result = await productsCollection.insertOne(product);
+            res.json(result);
         })
 
-        /* // GET Places API
-        app.get('/places', async (req, res) => {
-            const cursor = placeCollection.find({});
-            const result = await cursor.toArray();
+        // Get Reviews API
+        app.get('/reviews', async (req, res) => {
+            const result = await reviewsCollection.find({}).toArray();
             res.json(result);
         });
+
+        // Post Reviews api
+        app.post('/reviews', async (req, res) => {
+            const review = req.body;
+            const result = await reviewsCollection.insertOne(review);
+            res.json(result);
+        })
+
+        /* 
 
         // GET single place
         app.get('/places/:id', async (req, res) => {
@@ -71,13 +87,6 @@ async function run() {
             const result = await bookingCollection.deleteOne(query);
             res.json(result);
 
-        });
-
-        // GET booking API
-        app.get('/managebooking', async (req, res) => {
-            const cursor = bookingCollection.find({});
-            const result = await cursor.toArray();
-            res.json(result);
         });
 
         // UPDATE API
@@ -117,4 +126,3 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
     console.log(`app listening at http://localhost:${port}`)
 })
-
