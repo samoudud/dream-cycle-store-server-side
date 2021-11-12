@@ -63,15 +63,23 @@ async function run() {
             res.json(result);
         })
 
+        // GET orders api
+        app.get('/orders', async (req, res) => {
+            const result = await ordersCollection.find({}).toArray();
+            res.json(result);
+        })
+
+        // Post Orders api
+        app.post('/orders', async (req, res) => {
+            const order = req.body;
+            const result = await ordersCollection.insertOne(order);
+            res.json(result);
+        })
+
+        //
+
         /* 
 
-        // GET single place
-        app.get('/places/:id', async (req, res) => {
-            const id = req.params.id;
-            const query = { _id: ObjectId(id) }
-            const place = await placeCollection.findOne(query);
-            res.json(place);
-        });
 
         // POST booking api
         app.post('/addbooking', async (req, res) => {
