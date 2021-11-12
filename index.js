@@ -76,7 +76,22 @@ async function run() {
             res.json(result);
         })
 
-        //
+        // Post user api
+        app.post('/users', async (req, res) => {
+            const user = req.body;
+            const result = await usersCollection.insertOne(user);
+            res.json(result);
+        });
+
+        // Put update user api
+        app.put('/users', async (req, res) => {
+            const user = req.body;
+            const filter = { email: req.body }
+            const options = { upsert: true };
+            const docs = { $set: user };
+            const result = await usersCollection.updateOne(filter, docs, options);
+            res.json(result);
+        })
 
         /* 
 
