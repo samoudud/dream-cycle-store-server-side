@@ -86,7 +86,7 @@ async function run() {
         // Put update user api
         app.put('/users', async (req, res) => {
             const user = req.body;
-            const filter = { email: req.body }
+            const filter = { email: user.email }
             const options = { upsert: true };
             const docs = { $set: user };
             const result = await usersCollection.updateOne(filter, docs, options);
