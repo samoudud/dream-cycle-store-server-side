@@ -74,7 +74,22 @@ async function run() {
             const order = req.body;
             const result = await ordersCollection.insertOne(order);
             res.json(result);
-        })
+        });
+
+        // put order api
+        app.put('/orders/:id', async (req, res) => {
+            const id = req.params.id;
+            const updatedOrder = req.body;
+            const filter = { _id: ObjectId(id) };
+            const options = { upsert: true };
+            const updateDoc = {
+                $set: {
+                    status: updatedOrder.status,
+                },
+            };
+            const result = await ordersCollection.updateOne(filter, updateDoc, options);
+            res.json(result);
+        });
 
         // Post user api
         app.post('/users', async (req, res) => {
@@ -119,6 +134,7 @@ async function run() {
             const result = await ordersCollection.deleteOne(query);
             res.json(result);
         })
+
 
         /* 
 
