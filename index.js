@@ -103,34 +103,25 @@ async function run() {
                 isAdmin = true;
             }
             res.json({ admin: isAdmin });
+        });
+
+        // get my orders api
+        app.get('/myOrders/:email', async (req, res) => {
+            const email = req.params.email;
+            const result = await ordersCollection.find({ email: email }).toArray();
+            res.json(result);
         })
 
+        // Delete order api
+        app.delete('/myOrders/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) }
+            const result = await ordersCollection.deleteOne(query);
+            res.json(result);
+        })
 
         /* 
 
-
-        // POST booking api
-        app.post('/addbooking', async (req, res) => {
-            const booking = req.body;
-            const result = await bookingCollection.insertOne(booking);
-            res.json(result);
-        });
-
-        // GET MyOrder api
-        app.get('/mybookings/:email', async (req, res) => {
-            const email = req.params.email;
-            const result = await bookingCollection.find({ email: email }).toArray();
-            res.send(result)
-        });
-
-        // DELETE api
-        app.delete('/mybooking/:id', async (req, res) => {
-            const id = req.params.id;
-            const query = { _id: ObjectId(id) }
-            const result = await bookingCollection.deleteOne(query);
-            res.json(result);
-
-        });
 
         // UPDATE API
         app.put('/bookings/:id', async (req, res) => {
@@ -145,13 +136,6 @@ async function run() {
             };
             const result = await bookingCollection.updateOne(filter, updateDoc, options);
             console.log('updating booking', req.body);
-            res.json(result);
-        });
-
-        // POST Place Api
-        app.post('/addplace', async (req, res) => {
-            const place = req.body;
-            const result = await placeCollection.insertOne(place);
             res.json(result);
         }); */
 
