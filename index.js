@@ -108,6 +108,15 @@ async function run() {
             res.json(result);
         });
 
+        // put admin api
+        app.put('/users/admin', async (req, res) => {
+            const user = req.body;
+            const filter = { email: user.email };
+            const doc = { $set: { role: 'admin' } }
+            const result = await usersCollection.updateOne(filter, doc);
+            res.json(result);
+        })
+
         // get admin api
         app.get('/users/:email', async (req, res) => {
             const email = req.params.email;
@@ -134,27 +143,6 @@ async function run() {
             const result = await ordersCollection.deleteOne(query);
             res.json(result);
         })
-
-
-        /* 
-
-
-        // UPDATE API
-        app.put('/bookings/:id', async (req, res) => {
-            const id = req.params.id;
-            const updatedBooking = req.body;
-            const filter = { _id: ObjectId(id) };
-            const options = { upsert: true };
-            const updateDoc = {
-                $set: {
-                    status: updatedBooking.status,
-                },
-            };
-            const result = await bookingCollection.updateOne(filter, updateDoc, options);
-            console.log('updating booking', req.body);
-            res.json(result);
-        }); */
-
     }
     finally {
         // await client.close();
