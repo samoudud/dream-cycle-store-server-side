@@ -43,12 +43,22 @@ async function run() {
             const result = await productsCollection.findOne(query);
             res.json(result);
         });
+
         // Post Products api
         app.post('/products', async (req, res) => {
             const product = req.body;
             const result = await productsCollection.insertOne(product);
             res.json(result);
         })
+
+        // DELETE product api
+        app.delete('/products/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) }
+            const result = await productsCollection.deleteOne(query);
+            res.json(result);
+        })
+
 
         // Get Reviews API
         app.get('/reviews', async (req, res) => {
