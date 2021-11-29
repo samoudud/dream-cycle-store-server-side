@@ -1,6 +1,6 @@
 # Getting Started with Travel Mama
 
-This project was Created with [Create React App](https://infinite-everglades-57126.herokuapp.com).
+This project was created with [Create React App](https://infinite-everglades-57126.herokuapp.com).
 ## [Client Side Live Link](https://dream-cycle-store-kcp.firebaseapp.com/)
 
 ## [Client Side Public repo link]
